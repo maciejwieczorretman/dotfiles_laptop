@@ -1,0 +1,8 @@
+[Unit]
+Description=mbsync service [work]
+Documentation=man:mbsync(1)
+ConditionPathExists=%h/.mbsyncrc
+
+[Service]
+Type=oneshot
+ExecStart=$C_SCRIPT_DIR/notmuch-hook.sh
