@@ -1,0 +1,12 @@
+source ~/.config/mutt/generic/vim-keys
+source ~/.config/mutt/generic/options
+source ~/.config/mutt/proton/mailboxes
+source ~/.config/mutt/generic/sidebar
+source ~/.config/mutt/generic/tags
+source ~/.config/mutt/generic/theme
+source ~/.config/mutt/proton/account
+
+set nm_record = yes
+set nm_record_tags = "inbox,sent,me,read"
+
+# vim: syntax=neomuttrc

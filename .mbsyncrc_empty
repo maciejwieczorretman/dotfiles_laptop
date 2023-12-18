@@ -1,0 +1,49 @@
+IMAPAccount work
+Host <intel specific stuff>
+User <work email>
+AuthMechs <intel specific stuff>
+PassCmd <intel specific stuff>
+SSLType IMAPS
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Path ~/Mail/work/
+Inbox ~/Mail/work/Inbox
+SubFolders Verbatim
+
+Channel work
+Far :work-remote:
+Near :work-local:
+# Include everything. Alternatively you can select the folders you're interested on
+Patterns * "!All Mail"
+Remove Both
+SyncState *
+
+# proton secondary config
+IMAPAccount proton
+Host <proton ip>
+User <proton mail>
+Port <proton port>
+TLSType STARTTLS
+CertificateFile <cert file>
+Pass <proton bridge pass>
+
+IMAPStore proton-remote
+Account proton
+
+MaildirStore proton-local
+SubFolders Verbatim
+Path ~/Mail/proton/
+Inbox ~/Mail/proton/Inbox
+
+Channel proton
+Far :proton-remote:
+Near :proton-local:
+# Include everything. Alternatively you can select the folders you're interested on
+Patterns * "!All Mail"
+Create Near
+Sync All
+Expunge Both
+SyncState *

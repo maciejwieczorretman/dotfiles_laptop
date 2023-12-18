@@ -1,0 +1,13 @@
+[database]
+path=$HOME/Mail
+
+[user]
+name=$DEV_NAME
+primary_email=$WORK_EMAIL
+
+[new]
+tags=new
+
+[search]
+
+[maildir]

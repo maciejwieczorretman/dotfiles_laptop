@@ -1,0 +1,13 @@
+set from="email"
+set realname="name"
+
+# IMAP
+set imap_user="email"
+set imap_login="${imap_user}"
+set imap_authenticators="auth method"
+set imap_oauth_refresh_command="auth script"
+
+#SMTP
+set smtp_url="smtp url"
+set smtp_authenticators="${imap_authenticators}"
+set smtp_oauth_refresh_command="${imap_oauth_refresh_command}"
