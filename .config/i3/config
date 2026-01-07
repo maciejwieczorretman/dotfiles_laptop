@@ -1,0 +1,289 @@
+# i3 config file
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+# Font for window titles
+font pango:monospace 8
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3blocks exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3blocks
+bindsym XF86MonBrightnessUp exec light -A 10 && $refresh_i3blocks
+bindsym XF86MonBrightnessDown exec light -U 10 && $refresh_i3blocks
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# move to next workspace
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+# bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# scripts for wide wallpapers
+bindsym $mod+plus exec ~/.scripts/wallpaper_move.sh + 30
+bindsym $mod+minus exec ~/.scripts/wallpaper_move.sh - 30
+
+bindsym $mod+shift+e exec "bash -c $C_SCRIPT_DIR/emoji_picker.sh"
+bindsym $mod+d exec "dmenu_run -l 10"
+bindsym $mod+shift+m exec "$C_SCRIPT_DIR/kernel_menu_utils.sh menu"
+bindsym $mod+shift+u exec "$C_SCRIPT_DIR/script_menu_utils.sh menu"
+bindsym $mod+x exec "bash -c $C_SCRIPT_DIR/powerdmenu.sh"
+
+# Tryby : 
+# B - bookmark archiwum
+# C - cmds archiwum
+# M - kernel
+# P - programy
+# Q - screenshot
+# T - terminal
+# U - utils
+
+bindsym $mod+0 exec "notify-send 'Moje skróty: ' '\
+ +Shift+e -> emoji\n\
+ +Shift+m -> kernel menu\n\
+ +Shift+u -> utils menu\n\
+ +b -> zakładki\n\
+ +c -> komendy\n\
+ +m -> kernel\n\
+ +p -> programy\n\
+ +q -> screenshot\n\
+ +r -> rysowanie\n\
+ +t -> terminal\n\
+ +u -> utils\n\
+ +x -> zasilanie\n\
+'"
+
+set $mode_rysowanie Rysowanie: [m]ilton, [k]rita
+bindsym $mod+r mode "$mode_rysowanie"
+
+mode "$mode_rysowanie" {
+	bindsym m exec "$C_SCRIPT_DIR/script_menu_utils.sh milton_file"; mode "default"
+	bindsym k exec "$C_SCRIPT_DIR/script_menu_utils.sh krita_file"; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $mode_terminal Terminal: [t]erminal, [y]outube, [n]ews
+bindsym $mod+t mode "$mode_terminal"
+
+mode "$mode_terminal" {
+	bindsym t exec "$C_SCRIPT_DIR/alacritty.sh"; mode "default"
+	bindsym n exec "$C_SCRIPT_DIR/alacritty.sh -e newsboat"; mode "default"
+	bindsym y exec "~/bin/youtube-watch"; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $mode_utils Utils: [n]otatki, [e]dytor, [r]ysowanie
+bindsym $mod+u mode "$mode_utils"
+
+mode "$mode_utils" {
+	bindsym n exec "bash -c $C_SCRIPT_DIR/dmenu_notes.sh"; mode "default"
+	bindsym e exec "$C_SCRIPT_DIR/kernel_menu_utils.sh nvim_menu"; mode "default"
+	bindsym r exec "$C_SCRIPT_DIR/script_menu_utils.sh drawing_menu"; mode "default"
+	bindsym 0 exec "notify-send 'Pomocnicze skróty klawiszowe' 'e -> Neovim sesje\nn -> Notatki'"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $mode_kernel Kernel: [f]ormatuj patche
+bindsym $mod+m mode "$mode_kernel"
+# TODO: dodać więcej komend - kompilacja na przykład, lazygit, budowanie po ssh
+# może?
+mode "$mode_kernel" {
+	bindsym f exec "$C_SCRIPT_DIR/patchset_helper.sh 'patchset_format.sh'"; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $mode_cmds Komendy: [a]rchiwum, [k]ategorie, [e]dytuj
+bindsym $mod+c mode "$mode_cmds"
+
+mode "$mode_cmds" {
+	bindsym a exec "bash -c $C_SCRIPT_DIR/command_archive.sh"; mode "default"
+	bindsym k exec "bash -c $C_SCRIPT_DIR/command_archive_parser.sh"; mode "default"
+	bindsym e exec "$C_SCRIPT_DIR/alacritty.sh -e nvim $C_CMD_ARCHIVE"; mode "default"
+	# bindsym 0 exec "notify-send 'Skróty archiwum komend' 'b -> archiwum\nc -> kategorie\ne -> edytuj zakładki'"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+set $mode_bookmarks Zakładki: [a]rchiwum, [k]ategorie, [e]dytuj
+bindsym $mod+b mode "$mode_bookmarks"
+
+mode "$mode_bookmarks" {
+	bindsym a exec "bash -c $C_SCRIPT_DIR/bookmark_archive.sh"; mode "default"
+	bindsym k exec "bash -c $C_SCRIPT_DIR/bookmark_parser.sh"; mode "default"
+	bindsym e exec "$C_SCRIPT_DIR/alacritty.sh -e nvim $C_BOOKMARKS"; mode "default"
+	# bindsym 0 exec "notify-send 'Skróty zakładek' 'b -> archiwum\nc -> kategorie\ne -> edytuj zakładki'"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+i exec "bash -c $C_SCRIPT_DIR/command_archive.sh"
+
+# bindsym $mod+o exec "echo $MY_VARIABLE | dmenu -l 5"
+
+set $mode_photo Zrzut ekranu: [z]aznaczenie, [c]ały ekran, [o]kno
+bindsym $mod+q mode "$mode_photo"
+
+mode "$mode_photo" {
+        bindsym z exec "$C_SCRIPT_DIR/ssarea.sh"; mode "default"
+        bindsym c exec "$C_SCRIPT_DIR/ssfull.sh"; mode "default"
+        bindsym o exec "$C_SCRIPT_DIR/sswin.sh"; mode "default"
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+q mode "default"
+}
+
+set $mode_programs Programy: [m]  , [s]  , [c] 󰭹 , [f] 󰈹 
+bindsym $mod+p mode "$mode_programs"
+
+mode "$mode_programs" {
+	bindsym m exec "$C_GITHUB_DIR/milton/build/Milton"; mode "default"
+	bindsym s exec "steam"; mode "default"
+	bindsym c exec "google-chat-linux"; mode "default"
+	bindsym f exec "firefox"; mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+exec --no-startup-id picom
+
+bar {
+	position top
+	status_command i3blocks
+	font pango:Font Awesome 5 Free 15
+	font pango:terminal-font 11
+	workspace_min_width 50
+
+	colors {
+		focused_workspace      #363a4f #8aadf4 #181926
+		inactive_workspace      #363a4f #24273a	#a5adcb
+		urgent_workspace        #363a4f #ED8796 #181926
+
+	}
+}
+
+gaps inner 10
+default_border pixel 1
+for_window [class=.*] border pixel 3
+
+exec_always --no-startup-id x-on-resize --config ~/.config/i3/script.sh
+exec --no-startup-id source ~/.scripts/wallpaper_long.sh
+
+# this is for local music
+exec_always ~/.scripts/mpd_updater.sh
+
+# Colors - base wallpaper if there is no image
+exec --no-startup-id hsetroot -root -solid "#24273a"
+
+for_window [floating] resize set 900 500
+mouse_warping none
+
+# Useful for scripts that would do things to the browser
+no_focus [class="chromium"]
+no_focus [class="Chromium"]
+focus_on_window_activation none
+
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
+exec --no-startup-id protonmail-bridge
+exec --no-startup-id udiskie --no-automount --no-notify --tray
+
+exec --no-startup-id $C_GITHUB_DIR/i3-restore/i3-restore

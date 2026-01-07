@@ -8,3 +8,11 @@
 !/.scripts/kernel_menu_utils.sh
 !/.scripts/patchset_helper.sh
 !/.scripts/patchset_format.sh
+
+!/.config/
+/.config/*
+!/.config/i3
+/.config/i3/*
+!/.config/i3/config
+
+/.config/i3blocks/*
