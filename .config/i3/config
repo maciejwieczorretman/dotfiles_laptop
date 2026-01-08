@@ -266,6 +266,7 @@ for_window [class=.*] border pixel 3
 
 exec_always --no-startup-id x-on-resize --config ~/.config/i3/script.sh
 exec --no-startup-id source ~/.scripts/wallpaper_long.sh
+exec_always --no-startup-id source ~/.config/i3/script.sh
 
 # this is for local music
 exec_always ~/.scripts/mpd_updater.sh
